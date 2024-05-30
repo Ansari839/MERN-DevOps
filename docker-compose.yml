@@ -1,0 +1,23 @@
+version: '3'
+services: 
+  mongodb:
+    container_name: mern-mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+  backend:
+    container_name: mern-backend
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - URL=mongodb://mongodb/mern
+    depends_on:
+      - mongodb
+
+  frontend:
+    container_name: mern-frontend
+    build: ./client
+    ports:
+      - "3000:3000"
