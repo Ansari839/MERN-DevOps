@@ -5,6 +5,8 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
+    volumes:
+      - mongo-data:/data/db  # Mount the volume for MongoDB data  
 
   backend:
     container_name: mern-backend
@@ -15,9 +17,20 @@ services:
       - URL=mongodb://mongodb/mern
     depends_on:
       - mongodb
+    volumes:
+      - backend-data:/usr/src/app/data  # Mount the volume for backend data (adjust the path as needed)
+
 
   frontend:
     container_name: mern-frontend
     build: ./client
     ports:
       - "3000:3000"
+    volumes:
+      - frontend-data:/usr/src/app/data  # Mount the volume for frontend data (adjust the path as needed)
+
+volumes:
+  mongo-data:
+  backend-data:
+  frontend-data:
+
